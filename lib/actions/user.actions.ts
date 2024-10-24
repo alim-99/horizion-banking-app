@@ -8,7 +8,6 @@ import { CountryCode, ProcessorTokenCreateRequest, ProcessorTokenCreateRequestPr
 import { plaidClient } from "../plaid";
 import { revalidatePath } from "next/cache";
 import { addFundingSource, createDwollaCustomer } from "./dwolla.actions";
-import { NotFoundBoundary } from "next/dist/client/components/not-found-boundary";
 
 const {
   APPWRITE_DATABASE_ID: DATABASE_ID,
@@ -139,7 +138,7 @@ export const createLinkToken = async (user: User) => {
         client_user_id: user.$id
       },
       client_name: `${user.firstName} ${user.lastName}`,
-      products: ['auth'] as Products[],
+      products: ['auth', 'transactions'] as Products[],
       language: 'en',
       country_codes: ['US'] as CountryCode[],
     }
@@ -256,8 +255,8 @@ export const getBanks = async ({ userId }: getBanksProps) => {
     )
 
     return parseStringify(banks.documents);
-  } catch(error) {
-    console.log(error); 
+  } catch (error) {
+    console.log(error)
   }
 }
 
@@ -272,7 +271,7 @@ export const getBank = async ({ documentId }: getBankProps) => {
     )
 
     return parseStringify(bank.documents[0]);
-  } catch(error) {
-    console.log(error); 
+  } catch (error) {
+    console.log(error)
   }
 }
